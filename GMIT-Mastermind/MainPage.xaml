@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="GMIT_Mastermind.MainPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" BackgroundColor="SandyBrown" x:Class="GMIT_Mastermind.MainPage">
 
-    <StackLayout>
-        <Image Source="RedPeg.png" />
-        <Image Source="BluePeg.png" />
-        <Image Source="GreenPeg.png" />
-        <Image Source="YellowPeg.png" />
-        <Image Source="PinkPeg.png" />
-        <Image Source="TealPeg.png">
-            <Image.GestureRecognizers>
-                <DragGestureRecognizer />
-            </Image.GestureRecognizers>
-        </Image>
+    <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20" x:Name="Root">
+
+        <Frame BackgroundColor="#CE8244" CornerRadius="10" Padding="4" HorizontalOptions="FillAndExpand">
+            <Label Text="MASTERMIND" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" TextColor="Black" />
+        </Frame>
+
+        <Frame BackgroundColor="#CE8244" CornerRadius="10" Padding="4" HorizontalOptions="FillAndExpand">
+            <StackLayout x:Name="RoundsContainer" Orientation="Vertical" HorizontalOptions="Center" />
+        </Frame>
+
+        <Frame BackgroundColor="#CE8244" CornerRadius="10" Padding="4" HorizontalOptions="FillAndExpand">
+            <StackLayout x:Name="PegsContainer" Orientation="Horizontal" HorizontalOptions="Center" Padding="4" />
+        </Frame>
+
     </StackLayout>
 
 </ContentPage>

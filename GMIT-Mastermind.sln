@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMIT-Mastermind.UWP", "GMIT-Mastermind.UWP\GMIT-Mastermind.UWP.csproj", "{CD33E0A3-CADC-4668-ADBC-170D69422FA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMIT Mastermind.UWP", "GMIT-Mastermind.UWP\GMIT Mastermind.UWP.csproj", "{CD33E0A3-CADC-4668-ADBC-170D69422FA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMIT-Mastermind.Android", "GMIT-Mastermind.Android\GMIT-Mastermind.Android.csproj", "{43A5D933-6146-4ECB-A9C3-91F27D57C123}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMIT Mastermind.Android", "GMIT-Mastermind.Android\GMIT Mastermind.Android.csproj", "{43A5D933-6146-4ECB-A9C3-91F27D57C123}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMIT-Mastermind", "GMIT-Mastermind\GMIT-Mastermind.csproj", "{60B8322F-06AD-4672-B0F3-D3FB6EBF6498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GMIT Mastermind", "GMIT-Mastermind\GMIT Mastermind.csproj", "{60B8322F-06AD-4672-B0F3-D3FB6EBF6498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
