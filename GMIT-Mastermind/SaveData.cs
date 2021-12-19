@@ -6,11 +6,13 @@ namespace GMIT_Mastermind
         public int round;
         public int[] target;
         public int[,] board;
+        public int[,] pegs;
 
         public SaveData()
         {
             target = new int[4];
-            board = new int[4, 8];
+            board = new int[8, 4];
+            pegs = new int[8, 2];
 
             for (int x = 0; x < board.GetLength(0); x++)
             {
