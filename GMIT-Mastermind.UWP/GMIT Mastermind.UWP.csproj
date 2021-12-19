@@ -134,10 +134,10 @@
     <Content Include="Black.png" />
     <Content Include="Blue.png" />
     <Content Include="Green.png" />
-    <Content Include="Orange.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Purple.png" />
     <Content Include="Red.png" />
+    <Content Include="Turquoise.png" />
     <Content Include="White.png" />
     <Content Include="Yellow.png" />
   </ItemGroup>

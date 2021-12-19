@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 using Xamarin.Forms;
 
@@ -6,21 +8,51 @@ namespace GMIT_Mastermind
 {
     public partial class MainPage : ContentPage
     {
-        SaveData save;
+        SaveData save = new SaveData();
 
         private int selectedColor;
         Image selectedImage;
 
-        static readonly string[] ColorNames = { "Red", "Green", "Blue", "Purple", "Yellow", "Orange" };
+        static readonly string[] ColorNames = { "Red", "Green", "Blue", "Purple", "Yellow", "Turquoise" };
 
+        List<Image> boardPegs = new List<Image>();
+        List<Grid> scoreGridPegs = new List<Grid>();
 
         public MainPage()
         {
             InitializeComponent();
 
             GenerateBoardUI();
-
             GeneratePegsUI();
+
+            NewGame();
+        }
+
+        private void NewGame()
+        {
+            save = new SaveData();
+
+            Random rng = new Random();
+
+            List<int> duplicates = new List<int>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                int r;
+
+                // Make sure its not a duplicate
+                do
+                {
+                    r = rng.Next(0, ColorNames.Length);
+                } while (duplicates.Contains(r));
+
+                duplicates.Add(r);
+
+                // Cheat
+                Debug.WriteLine(ColorNames[r]);
+
+                save.target[i] = r;
+            }
         }
 
         /// <summary>
@@ -29,7 +61,7 @@ namespace GMIT_Mastermind
         private void GeneratePegsUI()
         {
             TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += SelectPeg;
+            tapGestureRecognizer.Tapped += SelectPeg_Tapped;
 
             for (int i = 0; i < 6; i++)
             {
@@ -47,7 +79,7 @@ namespace GMIT_Mastermind
         private void GenerateBoardUI()
         {
             TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += PlacePeg;
+            tapGestureRecognizer.Tapped += PlacePeg_Tapped;
 
             for (int i = 0; i < 8; i++)
             {
@@ -71,6 +103,8 @@ namespace GMIT_Mastermind
                 guessFrame.Padding = new Thickness(4);
 
                 Grid grid = new Grid();
+                scoreGridPegs.Add(grid);
+
                 grid.Margin = new Thickness(4);
 
                 grid.RowDefinitions.Add(new RowDefinition());
@@ -83,7 +117,6 @@ namespace GMIT_Mastermind
                     for (int y = 0; y < 2; y++)
                     {
                         Image bv = new Image();
-                        bv.Source = "Black.png";
 
                         bv.Opacity = 0.5f;
 
@@ -112,6 +145,8 @@ namespace GMIT_Mastermind
                 pegsLayout.Padding = new Thickness(8, 0);
                 pegsLayout.Orientation = StackOrientation.Horizontal;
 
+                pegsLayout.StyleId = (7 - i).ToString();
+
                 for (int j = 0; j < 4; j++)
                 {
                     Image peg = new Image();
@@ -122,6 +157,9 @@ namespace GMIT_Mastermind
                         peg.IsEnabled = false;
                     }
                     peg.GestureRecognizers.Add(tapGestureRecognizer);
+                    peg.StyleId = j.ToString();
+
+                    boardPegs.Add(peg);
                     pegsLayout.Children.Add(peg);
                 }
 
@@ -134,17 +172,38 @@ namespace GMIT_Mastermind
             }
         }
 
-        private async void PlacePeg(object sender, EventArgs e)
+        private void PlacePeg_Tapped(object sender, EventArgs e)
         {
-            Image img = (Image)sender;
+            Image pegImg = (Image)sender;
 
-            img.Source = ColorNames[selectedColor] + ".png";
+            pegImg.Source = ColorNames[selectedColor] + ".png";
+
+            save.board[int.Parse(pegImg.StyleId), save.round] = selectedColor;
+
+            bool isValid = true;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (save.board[i, save.round] == -1)
+                {
+                    isValid = false;
+                }
+            }
+
+            CheckButton.IsEnabled = isValid;
+
+            // Clear selection
+            foreach (Image child in PegsContainer.Children)
+            {
+                child.BackgroundColor = Color.Transparent;
+            }
         }
 
-        private void SelectPeg(object sender, EventArgs e)
+        private void SelectPeg_Tapped(object sender, EventArgs e)
         {
             Image img = (Image)sender;
 
+            // Clear selection
             foreach (Image child in PegsContainer.Children)
             {
                 child.BackgroundColor = Color.Transparent;
@@ -154,6 +213,74 @@ namespace GMIT_Mastermind
 
             selectedColor = int.Parse(img.StyleId);
             selectedImage = img;
+        }
+
+        private void Checked_Clicked(object sender, EventArgs e)
+        {
+            int whitePegs = 0;
+            int blackPegs = 0;
+
+            // Check number of black/white pegs to give
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (save.target[i] == save.board[j, save.round])
+                    {
+                        whitePegs++;
+
+                        if (i == j)
+                        {
+                            blackPegs++;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            int index = 0;
+
+            foreach (Image peg in scoreGridPegs[7 - save.round].Children)
+            {
+                if (index < blackPegs)
+                {
+                    peg.Opacity = 1;
+                    peg.Source = "Black.png";
+                }
+                else if (index < whitePegs)
+                {
+                    peg.Opacity = 1;
+                    peg.Source = "White.png";
+                }
+
+                index++;
+            }
+
+            // Move on to next round
+            save.round++;
+
+            if (save.round >= 8)
+            {
+                // TODO end game
+                return;
+            }
+
+            // Enable next row
+            foreach (Image peg in boardPegs)
+            {
+                if (peg.Parent.StyleId == save.round.ToString())
+                {
+                    peg.Opacity = 1f;
+                    peg.IsEnabled = true;
+                }
+                else
+                {
+                    peg.Opacity = 0.5f;
+                    peg.IsEnabled = false;
+                }
+            }
+
+            CheckButton.IsEnabled = false;
         }
     }
 }
