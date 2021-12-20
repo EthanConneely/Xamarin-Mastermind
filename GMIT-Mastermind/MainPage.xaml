@@ -1,15 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" BackgroundColor="SandyBrown" x:Class="GMIT_Mastermind.MainPage">
 
-    <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+    <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
 
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" HeightRequest="40">
             <Button BackgroundColor="#CE8244" Text="Save" CornerRadius="10" WidthRequest="70" Margin="0" Padding="0" Clicked="Save_Clicked" TextColor="Black" />
             <Button BackgroundColor="#CE8244" Text="Load" CornerRadius="10" WidthRequest="70" Margin="0" Padding="0" Clicked="Load_Clicked" TextColor="Black" />
-            <Frame BackgroundColor="#CE8244" CornerRadius="10" Margin="0" Padding="0" HorizontalOptions="FillAndExpand">
-                <Label Text="MASTERMIND" HorizontalOptions="FillAndExpand" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" />
-            </Frame>
-            <Button BackgroundColor="#CE8244" Text="Restart" CornerRadius="10" Margin="0" Padding="0" Clicked="Restart_Clicked" TextColor="Black" />
+            <Label Text="MASTERMIND" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" />
+            <Button BackgroundColor="#CE8244" Text="Restart" CornerRadius="10" WidthRequest="70" Margin="0" Padding="0" Clicked="Restart_Clicked" TextColor="Black" />
         </StackLayout>
 
         <Frame BackgroundColor="#CE8244" CornerRadius="10" Padding="4" HorizontalOptions="FillAndExpand">
